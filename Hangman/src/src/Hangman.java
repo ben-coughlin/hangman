@@ -71,14 +71,14 @@ public class Hangman
 				
 				System.out.println("your list of unguessed letters is: ");
 				
-				for(String a : alphabet)
-					{
-						if(guess.equals(a))
-							{
-								
-							}
-						System.out.print(a);
-					}
+//				for(String a : alphabet)
+//					{
+//						if(guess.equals(a))
+//							{
+//								
+//							}
+//						System.out.print(a);
+//					}
 				//while(isGuessing)
 					//{
 						
@@ -89,6 +89,7 @@ public class Hangman
 						
 						
 					//}
+						//eeeee
 			}
 	}
 	public static ArrayList<String> fillAlphabet()
