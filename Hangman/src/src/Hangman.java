@@ -89,7 +89,7 @@ public class Hangman
 						
 						
 					//}
-						//eeeee
+						//eeeeee
 			}
 	}
 	public static ArrayList<String> fillAlphabet()
