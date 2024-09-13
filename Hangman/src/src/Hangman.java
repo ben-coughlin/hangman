@@ -48,71 +48,103 @@ public class Hangman
 	}
 	public static void wordGuess()
 	{
-		Scanner letterScn = new Scanner(System.in);
-		
-		System.out.println("Enter a one-character guess. ");
-		String guess = letterScn.nextLine();
 		
 		
-		
-		
+		ArrayList<Character> alphabet = fillAlphabet();
 		int rand = (int)(Math.random() * 999);
 		
-		boolean isGuessing = true;
+		String secretWord = wl.get(rand);
+				
+		String[] secretWordObscured = new String[secretWord.length()];
 		
-		if(guess.length() > 1)
-			{
-				System.out.println("Invalid guess. Try again!");
-				wordGuess();
-			}
-		else
-			{
-				String secretWord = wl.get(rand);
-				
-				System.out.println("your list of unguessed letters is: ");
-				
-//				for(String a : alphabet)
-//					{
-//						if(guess.equals(a))
-//							{
-//								
-//							}
-//						System.out.print(a);
-//					}
-				//while(isGuessing)
-					//{
-						
-						for(int i = 0; i < secretWord.length(); i++)
-							{
-								System.out.print(" _ ");
-							}
-						
-						
-					//}
-						//test test
-						
-			}
+		for(int i = 0; i < secretWord.length(); i++)
+		{
+			secretWordObscured[i] +=" _ ";
+		}
+		
+		System.out.println("Your word has " + secretWord.length() + " letters.");
+		
+		printSWO(secretWordObscured);
+		
+		System.out.println("\nyour list of unguessed letters is: ");
+		
+		for(int i = 0; i < alphabet.size(); i++)
+		{
+			System.out.print(alphabet.get(i) + " ");
+		}
+		guessLoop(secretWord, secretWordObscured);
 	}
-	public static ArrayList<String> fillAlphabet()
+	public static void guessLoop(String secretWord, String[] secretWordObscured)
+		{
+		Scanner letterScn = new Scanner(System.in);
+		ArrayList<Character> alphabet = fillAlphabet();
+		
+			System.out.println("\nEnter a one-character guess. ");
+			String guess = letterScn.nextLine();
+
+			if(guess.length() > 1)
+				{
+					System.out.println("Invalid guess. Try again!");
+					return;
+				}
+			else
+				{
+					alphabet.remove(guess);
+					
+					if(secretWord.contains(guess))
+							{
+						secretWordObscured[findCharacter(guess, secretWord)] = guess;
+
+							}
+					
+				}
+			
+			printSWO(secretWordObscured);
+			
+			System.out.println("\nyour list of unguessed letters is: ");
+			
+			for(int i = 0; i < alphabet.size(); i++)
+			{
+				System.out.print(alphabet.get(i) + " ");
+			}
+		}
+		
+	
+	public static ArrayList<Character> fillAlphabet()
 	{
-		ArrayList<String> alphabet = new ArrayList<String>(); 
+		ArrayList<Character> alphabet = new ArrayList<Character>(); 
 		
+		char c;
 		
-		//{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
-		alphabet.add("a");
-		alphabet.add("b");
-		alphabet.add("c");
-		alphabet.add("d");
-		alphabet.add("e");
-		alphabet.add("f");
-		alphabet.add("g");
-		alphabet.add("h");
-		alphabet.add("i");
-		alphabet.add("j");
-		alphabet.add("k");
-		
+		for(c = 'a'; c <= 'z'; ++c)
+		{
+		      alphabet.add(c);
+		   }
+	
 		
 		return alphabet;
+	}
+	public static int findCharacter(String guess, String secretWord)
+	{
+		int charIndex = 0;
+		String[] swArray = secretWord.split(""); 
+		
+		for(int i = 0; i < secretWord.length(); i++)
+		{
+			if(swArray[i].equals(guess))
+			{
+				charIndex = i;
+			}
+		}
+		
+		return charIndex;
+	}
+	public static void printSWO(String[] secretWordObscured)
+	{
+		for(int i = 0; i < secretWordObscured.length; i++)
+		{
+			System.out.print(secretWordObscured[i]);
+		}
 	}
 	
 }
