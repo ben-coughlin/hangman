@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.*;
 import java.io.IOException;
 import java.util.Scanner;
+
 public class Hangman
 	{
 		static ArrayList<String>wl = new ArrayList<String>();
@@ -59,14 +60,14 @@ public class Hangman
 		
 		for(int i = 0; i < secretWord.length(); i++)
 		{
-			secretWordObscured[i] +=" _ ";
+			secretWordObscured[i] =" _ ";
 		}
 		
 		System.out.println("Your word has " + secretWord.length() + " letters.");
 		
 		printSWO(secretWordObscured);
 		
-		System.out.println("\nyour list of unguessed letters is: ");
+		System.out.println("\nYour list of unguessed letters is: ");
 		
 		for(int i = 0; i < alphabet.size(); i++)
 		{
@@ -78,6 +79,7 @@ public class Hangman
 		{
 		Scanner letterScn = new Scanner(System.in);
 		ArrayList<Character> alphabet = fillAlphabet();
+		int incorrectGuessCounter = 0;
 		
 			System.out.println("\nEnter a one-character guess. ");
 			String guess = letterScn.nextLine();
@@ -89,24 +91,25 @@ public class Hangman
 				}
 			else
 				{
-					alphabet.remove(guess);
-					
+					//alphabet.remove(guess);
+				
+					System.out.println(findCharacter(guess, secretWord));
 					if(secretWord.contains(guess))
 							{
 						secretWordObscured[findCharacter(guess, secretWord)] = guess;
 
 							}
+					else
+					{
+						
+						displayStickman(incorrectGuessCounter, guess);
+					}
 					
 				}
 			
 			printSWO(secretWordObscured);
 			
-			System.out.println("\nyour list of unguessed letters is: ");
 			
-			for(int i = 0; i < alphabet.size(); i++)
-			{
-				System.out.print(alphabet.get(i) + " ");
-			}
 		}
 		
 	
@@ -136,7 +139,7 @@ public class Hangman
 				charIndex = i;
 			}
 		}
-		
+		System.out.println(charIndex);
 		return charIndex;
 	}
 	public static void printSWO(String[] secretWordObscured)
@@ -145,6 +148,28 @@ public class Hangman
 		{
 			System.out.print(secretWordObscured[i]);
 		}
+	}
+	public static void displayStickman(int incorrectGuessCounter, String guess)
+	{
+		
+		String[] stickman = {"o", "/", "|", "\\", "/", "\\"}; 
+		
+		System.out.println("Your guess \"" + guess + "\" was incorrect. You have guessed incorrectly " + (incorrectGuessCounter + 1) + " times.");
+		System.out.print("			" + stickman[incorrectGuessCounter] + "\n\n\n");
+		incorrectGuessCounter++; 
+	}
+	public static boolean isLetterGuessed(HashSet<String>guessedLetters, String guess)
+	{
+		boolean isLetterGuessed = false;
+		
+		guessedLetters.add(guess);
+		
+		if(guessedLetters.contains(guess))
+		{
+			isLetterGuessed = true;
+		}
+		
+		return isLetterGuessed;
 	}
 	
 }
