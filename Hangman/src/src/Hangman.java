@@ -51,7 +51,7 @@ public class Hangman
 	{
 		
 		
-		ArrayList<Character> alphabet = fillAlphabet();
+		ArrayList<Character> alphabet = GuessLoop.fillAlphabet();
 		int rand = (int)(Math.random() * 999);
 		
 		String secretWord = wl.get(rand);
@@ -73,12 +73,12 @@ public class Hangman
 		{
 			System.out.print(alphabet.get(i) + " ");
 		}
-		guessLoop(secretWord, secretWordObscured);
+		guess(secretWord, secretWordObscured);
 	}
-	public static void guessLoop(String secretWord, String[] secretWordObscured)
+	public static void guess(String secretWord, String[] secretWordObscured)
 		{
 		Scanner letterScn = new Scanner(System.in);
-		ArrayList<Character> alphabet = fillAlphabet();
+		ArrayList<Character> alphabet = GuessLoop.fillAlphabet();
 		int incorrectGuessCounter = 0;
 		
 			System.out.println("\nEnter a one-character guess. ");
@@ -93,7 +93,7 @@ public class Hangman
 				{
 					//alphabet.remove(guess);
 				
-					System.out.println(findCharacter(guess, secretWord));
+					//System.out.println(findCharacter(guess, secretWord)); debugging
 					if(secretWord.contains(guess))
 							{
 						secretWordObscured[findCharacter(guess, secretWord)] = guess;
@@ -102,31 +102,18 @@ public class Hangman
 					else
 					{
 						
-						displayStickman(incorrectGuessCounter, guess);
+						GuessLoop.displayStickman(incorrectGuessCounter, guess);
 					}
 					
 				}
 			
 			printSWO(secretWordObscured);
-			//a
 			
+			//GuessLoop.guessLoop(secretWord,secretWordObscured, incorrectGuessCounter); TODO: FIX THIS
 		}
 		
 	
-	public static ArrayList<Character> fillAlphabet()
-	{
-		ArrayList<Character> alphabet = new ArrayList<Character>(); 
-		
-		char c;
-		
-		for(c = 'a'; c <= 'z'; ++c)
-		{
-		      alphabet.add(c);
-		   }
 	
-		
-		return alphabet;
-	}
 	public static int findCharacter(String guess, String secretWord)
 	{
 		int charIndex = 0;
@@ -139,7 +126,7 @@ public class Hangman
 				charIndex = i;
 			}
 		}
-		System.out.println(charIndex);
+		//System.out.println(charIndex); - debugging purposes
 		return charIndex;
 	}
 	public static void printSWO(String[] secretWordObscured)
@@ -149,27 +136,7 @@ public class Hangman
 			System.out.print(secretWordObscured[i]);
 		}
 	}
-	public static void displayStickman(int incorrectGuessCounter, String guess)
-	{
-		
-		String[] stickman = {"o", "/", "|", "\\", "/", "\\"}; 
-		
-		System.out.println("Your guess \"" + guess + "\" was incorrect. You have guessed incorrectly " + (incorrectGuessCounter + 1) + " times.");
-		System.out.print("			" + stickman[incorrectGuessCounter] + "\n\n\n");
-		incorrectGuessCounter++; 
-	}
-	public static boolean isLetterGuessed(HashSet<String>guessedLetters, String guess)
-	{
-		boolean isLetterGuessed = false;
-		
-		guessedLetters.add(guess);
-		
-		if(guessedLetters.contains(guess))
-		{
-			isLetterGuessed = true;
-		}
-		
-		return isLetterGuessed;
-	}
+	
+	
 	
 }
