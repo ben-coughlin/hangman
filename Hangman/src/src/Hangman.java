@@ -3,7 +3,6 @@ package src;
 import java.io.File;
 import java.util.*;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Hangman
 	{
@@ -13,21 +12,9 @@ public class Hangman
 			{
 				fillDict();
 				startGame();
-				GuessLoop.wordGuess();
+				GuessLoop.guessLoop();
 			}
-	public static void fillDict() throws IOException
-		{
-			
-			
-			Scanner fileScn = new Scanner(new File("wordlist.txt"));
-			
-			while(fileScn.hasNext())
-				{
-					wl.add(fileScn.nextLine());
-				}
-		
 
-	}
 	public static void startGame()
 	{
 		System.out.println("\r\n"
@@ -47,6 +34,7 @@ public class Hangman
 		System.out.println("Welcome! Hangman is a game where you get a certain amount of guesses to find a word. You will enter one letter at a time, if the letter is correct it will go to the correct spot on the word.\n"
 				+ "If the letter is incorrect, it will be put aside and the hangman will gain a limb. If the hangman is completed without guessing the word, you lose! Good luck :)");
 	}
+	//general utility methods  = = = = = = = = = = = = = = = = = = = =
 	
 	public static int findCharacter(String guess, String secretWord)
 	{
@@ -63,6 +51,7 @@ public class Hangman
 		//System.out.println(charIndex); - debugging purposes
 		return charIndex;
 	}
+	
 	public static void printSWO(String[] secretWordObscured)
 	{
 		for(int i = 0; i < secretWordObscured.length; i++)
@@ -70,6 +59,36 @@ public class Hangman
 			System.out.print(secretWordObscured[i]);
 		}
 	}
+	
+	public static ArrayList<Character> fillAlphabet()
+	{
+		ArrayList<Character> alphabet = new ArrayList<Character>(); 
+		
+		char c;
+		
+		for(c = 'a'; c <= 'z'; ++c)
+		{
+		      alphabet.add(c);
+		   }
+	
+		
+		return alphabet;
+	}
+	
+	public static void fillDict() throws IOException
+	{
+		
+		
+		Scanner fileScn = new Scanner(new File("wordlist.txt"));
+		
+		while(fileScn.hasNext())
+			{
+				wl.add(fileScn.nextLine());
+			}
+	
+
+}
+	
 	
 	
 	
