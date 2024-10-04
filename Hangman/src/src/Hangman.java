@@ -60,6 +60,8 @@ public class Hangman
 		}
 	}
 	
+	
+	
 	public static ArrayList<Character> fillAlphabet()
 	{
 		ArrayList<Character> alphabet = new ArrayList<Character>(); 
